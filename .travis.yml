@@ -2,4 +2,4 @@ sudo: required
 language: python
 
 script:
-- python UnitTester.py
+- cd SampleCode; python UnitTester.py

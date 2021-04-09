@@ -1,5 +1,13 @@
 sudo: required
 language: python
 
+install: 
+- pip install coverage
+
 script:
-- cd SampleCode; python UnitTester.py
+- cd SampleCode; coverage run UnitTester.py;
+
+after_success: 
+- bash <(curl -s https://codecov.io/bash)
+
+

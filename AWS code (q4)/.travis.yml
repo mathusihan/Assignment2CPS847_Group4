@@ -1,0 +1,25 @@
+sudo: required
+language: python
+services:
+- docker
+
+script:
+- docker image build -t homayram/dockertest1 .
+
+after_success:
+  #log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #take built images and push to DOcker hub
+  - docker push homayram/dockertest1
+  #test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "dtest"
+  env: "Dtest-env-1"
+  bucket_name: "elasticbeanstalk-us-east-2-628285638998"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
